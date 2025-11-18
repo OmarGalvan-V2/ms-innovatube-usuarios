@@ -82,11 +82,26 @@ public class UsuarioController {
 	@PostMapping("/crearUsuario")
 	public ResponseEntity<?> crearUsuario(@Valid @RequestBody UsuarioDto objetoUsuario){
 		if (!recaptchaService.validateToken(objetoUsuario.getRecaptchaToken())) {
-			throw new RuntimeException("Token reCAPTCHA inválido");
+			return ResponseEntity.badRequest().body("Token reCAPTCHA inválido");
 		}
-	    Usuario usuario = usuarioService.convertirDtoAEntidad(objetoUsuario);
-	    Usuario guardado = usuarioService.insertarUsuario(usuario);
-		return ResponseEntity.ok(guardado);
+		
+		// Validar edad mínima de 18 años
+		if (!usuarioService.esEdadValida(objetoUsuario.getFechaNacimiento())) {
+			return ResponseEntity.badRequest().body("Debes tener al menos 18 años para registrarte");
+		}
+		
+		try {
+			Usuario usuario = usuarioService.convertirDtoAEntidad(objetoUsuario);
+			Usuario guardado = usuarioService.insertarUsuario(usuario);
+			return ResponseEntity.ok(guardado);
+		} catch (Exception e) {
+			if (e.getMessage().contains("correo")) {
+				return ResponseEntity.badRequest().body("El correo ya está registrado");
+			} else if (e.getMessage().contains("usuario")) {
+				return ResponseEntity.badRequest().body("El nombre de usuario ya existe");
+			}
+			return ResponseEntity.badRequest().body("Error al crear usuario");
+		}
 	}
 	
 	@PostMapping("/login")
@@ -105,7 +120,7 @@ public class UsuarioController {
 			
 			HttpEntity<Map<String, Object>> entity = new HttpEntity<>(jwtRequest, headers);
 			ResponseEntity<Map> response = restTemplate.postForEntity(
-				"http://localhost:8092/jwt/generar", entity, Map.class);
+				"http://innovatube-jwt:8092/jwt/generar", entity, Map.class);
 			
 			return ResponseEntity.ok(response.getBody());
 		}

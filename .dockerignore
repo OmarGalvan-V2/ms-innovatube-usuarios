@@ -1,0 +1,72 @@
+# Java build output
+/target/
+*.class
+
+# IDE and editor files
+.idea/
+.vscode/
+.settings/
+*.swp
+*.swo
+.classpath
+.factorypath
+.project
+
+# Version control
+.git/
+.gitignore
+.gitattributes
+.svn/
+.hg/
+
+# Build and distribution directories
+build/
+dist/
+out/
+tmp/
+temp/
+
+# Test sources
+src/test/
+
+# Documentation
+*.md
+README*
+HELP.md
+
+# Environment and secrets
+.env*
+*.env
+*.pem
+*.key
+*.crt
+config.local.*
+*.local.yml
+.local/
+local/
+
+# Temporary files
+*.tmp
+
+# Log and debug files
+*.log
+debug/
+
+# Node.js, Python, Go (for completeness, though not detected)
+node_modules/
+npm-debug.log
+yarn-debug.log
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.coverage
+/vendor/
+*.test
+.go-cache/
+
+# Maven wrapper and gradle files/directories are NOT ignored as per instructions
+# .mvnw, .mvn/, .gradlew, .gradle/ are intentionally included
+
+# Docker files (do not ignore Dockerfile or docker-compose files)
+# (No patterns for Dockerfile* or docker-compose*)

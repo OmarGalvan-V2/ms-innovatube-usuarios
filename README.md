@@ -1,23 +1,33 @@
-# MS-Innovatube-Usuarios
+## Running with Docker
 
-## Versión: 0.0.0.1
-- __Ticket/Proyecto:__ MS-Usuarios
-- __Autor:__ Omar Manuel Manrique Galván
-- __Fecha:__ 17/11/2025
-- __Descripción:__
-  -  new versión: Se crea inicia el proyecto.
-  -  feat: Se crea funcionalidad completa del registro de usuarios, JWT, recaptcha y Login.
-  -  feat: Se conecta a la base de datos de MySQL.
-  -  security: Se encrypta las contraseñas.
-  -  feat: Se retornan mensajes de error del backend al frontend.
-  -  feat: Configuración centralizada con Spring Cloud Config.
-  -  feat: Gestión de usuarios con JPA.
-  -  feat: Integración con Eureka Service.
-  -  fix: Resolución de logger no encontrado.
-  -  fix: Configuración de puerto consistente.
-  -  refactor: Migración a configuración externa.
-  -  refactor: Arquitectura de microservicios.
-  -  security: Implementación de autenticación JWT.
-  -  security: Validación con reCAPTCHA.
-  -  chore: Configuración de base de datos
---------
+This project includes a multi-stage Docker setup using Eclipse Temurin JDK 17 for both build and runtime. The application is packaged as a Spring Boot JAR and runs on port **8080** by default.
+
+### Requirements
+- Docker and Docker Compose installed
+- No additional environment variables are required by default (uncomment `env_file` in `docker-compose.yml` if you add a `.env` file)
+
+### Build and Run
+To build and start the application using Docker Compose:
+
+```sh
+docker compose up --build
+```
+
+This will:
+- Build the application using Maven Wrapper inside the container
+- Run the app as a non-root user for improved security
+- Expose port **8080** (Spring Boot default)
+
+### Configuration
+- The application runs with JVM options optimized for containers (`JAVA_OPTS` is set in the Dockerfile)
+- If you need to override configuration, mount your own `application.properties` or use environment variables as needed
+
+### Ports
+- `8080:8080` – Main application HTTP port
+
+### Networking
+- The service is attached to a custom Docker network `appnet` for easy extension with other services
+
+---
+
+For further customization, edit the `docker-compose.yml` or `Dockerfile` as needed for your environment.

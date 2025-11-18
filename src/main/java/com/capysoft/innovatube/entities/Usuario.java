@@ -40,7 +40,7 @@ public class Usuario {
 	
 	private String password;
 	
-	@Column(name="fecha_nacimiento", unique= true)
+	@Column(name="fecha_nacimiento")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private Date fechaNacimiento;
 

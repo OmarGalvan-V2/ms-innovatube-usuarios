@@ -2,6 +2,10 @@ package com.capysoft.innovatube.service.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Date;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -75,5 +79,17 @@ public class UsuarioServiceImpl  implements UsuarioService{
 	
 	public boolean checkPassword(String rawPassword, String encodedPassword) {
 		return passwordEncoder.matches(rawPassword, encodedPassword);
+	}
+	
+	public boolean esEdadValida(Date fechaNacimiento) {
+		if (fechaNacimiento == null) {
+			return false;
+		}
+		
+		LocalDate fechaNac = fechaNacimiento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		LocalDate fechaActual = LocalDate.now();
+		int edad = Period.between(fechaNac, fechaActual).getYears();
+		
+		return edad >= 18;
 	}
 }
