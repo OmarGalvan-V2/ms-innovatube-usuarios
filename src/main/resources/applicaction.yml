@@ -3,6 +3,10 @@ spring:
     import: configserver:https://ms-innovatube-config-server.onrender.com/
   application:
     name: innovatube-usuarios
-    
+
 server:
   port: 8093
+
+  eureka:
+    instance:
+      prefer-ip-address: true
