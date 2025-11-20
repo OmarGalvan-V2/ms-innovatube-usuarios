@@ -49,6 +49,9 @@ public class UsuarioController {
 
 	@Autowired
 	private Environment env; 
+	
+	@Autowired
+    private RestTemplate restTemplate;
 
 
 	@GetMapping("/texto-config")
@@ -109,7 +112,6 @@ public class UsuarioController {
 		Usuario usuario = usuarioService.findByEmailOrUsername(loginRequest.getCorreoOUsuario());
 		if (usuario != null && usuarioService.checkPassword(loginRequest.getPassword(), usuario.getPassword())) {
 
-			RestTemplate restTemplate = new RestTemplate();
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			
