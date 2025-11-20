@@ -120,7 +120,7 @@ public class UsuarioController {
 			
 			HttpEntity<Map<String, Object>> entity = new HttpEntity<>(jwtRequest, headers);
 			ResponseEntity<Map> response = restTemplate.postForEntity(
-				"http://innovatube-jwt:8092/jwt/generar", entity, Map.class);
+				"http://innovatube-jwt/jwt/generar", entity, Map.class);
 			
 			return ResponseEntity.ok(response.getBody());
 		}
